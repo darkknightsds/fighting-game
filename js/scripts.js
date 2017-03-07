@@ -1,16 +1,24 @@
 //Back-end logic
 var switchTurns = function() {
+
+  if (passivePlayer.hP <= 0) {alert(passivePlayer.charName + " has died.")}
+  placeHolder = activePlayer;
+
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
+  console.log(activePlayer);
+  console.log(passivePlayer);
+  toggleButtons();
 };
 
 var diceRoller = function(sides) {
   return Math.ceil(Math.random() * sides);
 };
 
-function Character(charName, hP, attackStat, attackModifier, defenseStat, defenseModifier){
+function Character(charName, charImgUrl, hP, attackStat, attackModifier, defenseStat, defenseModifier){
   this.charName = charName;
+  this.charImgUrl = charImgUrl
   this.hP = hP;
   this.attackStat = attackStat;
   this.attackModifier = attackModifier;
@@ -22,8 +30,10 @@ Character.prototype.attack = function() {
   return this.attackStat + diceRoller(this.attackModifier);
 };
 
-Character.prototype.defense = function() {
-  return this.defenseStat;
+
+Character.prototype.defense = function(){
+  return this.defenseStat + this.defenseModifier;
+
 };
 
 Character.prototype.death = function() {
@@ -32,76 +42,97 @@ Character.prototype.death = function() {
 
 Character.prototype.outcome = function(c1Attack, c2Defense) {
   if (c1Attack > c2Defense) {
-   return this.hP -= (c1Attack - c2Defense);
- } else {
-   return 0;
- }
-  if (this.hP <= 0) {
-    this.death();
-  } else {
-    switchTurns();
+
+    this.hP -= (c1Attack - c2Defense);
+
   }
+  return this.hP;
 };
 
 var characters = [];
 
-var max = new Character("Max", 100, 10, 10, 10);
+var max = new Character("Max", "img/player1.jpg", 100, 10, 10, 10);
 characters.push(max);
-var dick = new Character("Dick", 100, 10, 5, 15);
+var dick = new Character("Dick", "img/player2.jpg", 100, 10, 5, 15);
 characters.push(dick);
 
-var activePlayer = characters[0];
-var passivePlayer = characters[1];
+var setInitialTurnOrder = function() {
+  activePlayer = characters[0];
+  passivePlayer = characters[1];
+};
+setInitialTurnOrder();
 
-function p1Attack() {
+function attackButton() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  if (passivePlayer.hP > 0) {
-      $("#p2Status").text(passivePlayer.hP);
-    } else {
-      $("#p2Status").text(passivePlayer.charName + " is dead!");
-    }
+  $("#" + passivePlayer.charName + "Status").text(passivePlayer.hP);
+  switchTurns();
 };
 
-function p2Attack() {
-  passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  if (passivePlayer.hP > 0) {
-      $("#p1Status").text(passivePlayer.hP);
+function defendButton() {
+  activePlayer.defenseModifier = (activePlayer.defenseStat)/3;
+  switchTurns();
+}
+
+var toggleButtons = function() {
+  $(".btn").each(function() {
+    if (this.hasAttribute("disabled")) {
+      $(this).prop("disabled", false);
     } else {
-      $("#p1Status").text(passivePlayer.charName + " is dead!");
+      $(this).prop("disabled", true);
     }
+  });
 };
 
-// function p1Defend() {
-//   max.defense();
-//   $("#p1Status").text("P1 is choosing to defend.");
-// };
-
-// function p2Defend() {
-//   dick.defense();
-//   $("#p2Status").text("P2 is choosing to defend.");
-// };
 
 //Front-end logic
 $(document).ready(function() {
 
-  $("#p1Attack").click(function() {
-    event.preventDefault();
-    p1Attack();
+var populatePlayerInterface = function(player) {
+  $("div#playerInterface").append('<div class="col-md-6">' +
+                                      '<img src="' +
+                                      player.charImgUrl +
+                                      '" alt="' +
+                                      player.charName +
+                                      '" id="' +
+                                      player.charName +
+                                      'Image">' +
+                                      '<h2>' +
+                                      player.charName +
+                                      '</h2>' +
+                                    '</div>'
+  );
+  $("div#playerStatus").append('<div class="col-md-6">' +
+                                  '<p>Hit points: ' +
+                                    '<span id="' +
+                                    player.charName +
+                                    'Status">' +
+                                    player.hP +
+                                    '</span>' +
+                                  '</p>' +
+                                '</div>'
+  );
+  $("div#playerControls").append('<div class="col-md-6">' +
+                                    '<button class="btn attack" type="click">Attack</button>' +
+                                    '<button class="btn defend" type="click">Defend</button>' +
+                                  '</div>'
+  );
+};
+
+populatePlayerInterface(activePlayer);
+switchTurns();
+populatePlayerInterface(activePlayer);
+switchTurns();
+
+
+  $("#p1Name").text((characters[0].charName));
+  $("#p2Name").text((characters[1].charName));
+
+  $(".attack").click(function() {
+    attackButton();
   });
 
-  $("#p2Attack").click(function() {
-    event.preventDefault();
-    p2Attack();
+  $(".defend").click(function() {
+    defendButton();
   });
-
-  // $("#p1Defend").click(function() {
-  //   event.preventDefault();
-  //   p2Defend();
-  // });
-
-  // $("#p2Defend").click(function() {
-  //   event.preventDefault();
-  //   p2Defend();
-  // });
 
 });
