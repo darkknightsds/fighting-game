@@ -24,7 +24,7 @@ Character.prototype.attack = function(){
 };
 
 Character.prototype.defense = function(){
-  return this.defenseStat;
+  return this.defenseStat + this.defenseModifier;
 };
 
 Character.prototype.outcome = function(c1Attack, c2Defense){
@@ -51,6 +51,12 @@ function attack() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
   $("#p2Status").text(characters[1].hP);
 };
+
+function defend() {
+  activePlayer.defenseModifier = (activePlayer.defenseStat)/3;
+  switchTurns();
+
+}
 // function p1Defend() {
 //   max.defense();
 //   $("#p1Status").text("P1 is choosing to defend.");
@@ -66,21 +72,19 @@ function p2Attack() {
 
 //Front-end logic
 $(document).ready(function() {
+  $("#p1Name").text((characters[0].charName));
+  $("#p2Name").text((characters[1].charName));
 
   $("#p1Attack").click(function() {
-    event.preventDefault();
     p1Attack();
   });
-  // $("#p1Defend").click(function() {
-  //   event.preventDefault();
-  //   p2Defend();
-  // });
+  $("#p1Defend").click(function() {
+    p1Defend();
+  });
   $("#p2Attack").click(function() {
-    event.preventDefault();
     p2Attack();
   });
-  // $("#p2Defend").click(function() {
-  //   event.preventDefault();
-  //   p2Defend();
-  // });
+  $("#p2Defend").click(function() {
+    p2Defend();
+  });
 });
