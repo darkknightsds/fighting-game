@@ -1,0 +1,63 @@
+Brainstorming notes:
+
+Fight game notes:
+Turn based fighting game
+2 characters with stats
+
+choose what to do on your turn
+
+
+character creation: x points to contribute to character creation
+stock characters
+abilities / attack types
+
+Later, animations
+
+
+Combat Management System
+
+MVP:
+2 stock characters
+a character has:
+	name
+	hp
+	attack rating
+	defense rating
+	basic attacks
+
+	(special pool)
+	(special attacks)
+
+a turn consists of:
+	choosing action
+		attack
+		defend
+		special
+	determine damage
+	modify stats
+	determine if defending character dies
+
+results of victory
+	taunt
+
+UI:
+	title
+	character image
+	stats display
+	buttons for action choice
+
+things we want:
+	animations
+	special abilities
+		heal
+		build special
+	build character
+	different weapons
+	sound effects
+	credits page
+	trololo
+	Dick Lomasie
+
+wishlist:
+	initiative
+	tag team
