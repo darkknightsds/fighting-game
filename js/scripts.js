@@ -22,7 +22,9 @@ Character.prototype.defense = function(){
 
 Character.prototype.outcome = function(c1Attack, c2Defense){
   if (c1Attack > c2Defense) {
-    this.hP -= (c1Attack - c2Defense);
+    return this.hP -= (c1Attack - c2Defense);
+  } else {
+    return 0;
   }
   if (this.hP < 0) {
     this.death();
