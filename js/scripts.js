@@ -24,22 +24,22 @@ Character.prototype.outcome = function(c1Attack, c2Defense){
 };
 
 //Front-end logic
-function p1Attack {
+function p1Attack() {
   player1.attack();
   player2.outcome();
   $("#p2Status").text(player2.hP);
 };
-function p1Defend {
-  player1.defend();
+function p1Defend() {
+  player1.defense();
   $("#p1Status").text("P1 is choosing to defend.");
 };
-function p2Attack {
+function p2Attack() {
   player2.attack();
   player1.outcome();
   $("#p1Status").text(player1.hP);
 };
-function p2Defend {
-  player2.defend();
+function p2Defend() {
+  player2.defense();
   $("#p2Status").text("P2 is choosing to defend.");
 };
 
