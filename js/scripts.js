@@ -19,16 +19,25 @@ Character.prototype.defense = function(){
   return this.defenseStat;
 };
 
+Character.prototype.death = function(){
+  return this.charName + " is dead!";
+};
+
 Character.prototype.outcome = function(c1Attack, c2Defense){
   if (c1Attack > c2Defense) {
-    return this.hP -= (c1Attack - c2Defense);
-  } else {
-    return 0;
-  }
-  if (this.hP < 0) {
-    this.death();
-  }
+   return this.hP -= (c1Attack - c2Defense);
+ } else {
+   return 0;
+ }
+  // if (this.hP <= 0) {
+  //   return this.charName + " is dead!";
+  // } else if (c1Attack > c2Defense) {
+  //   return this.hP -= (c1Attack - c2Defense);
+  // } else {
+  //   return 0;
+  // }
 };
+
 
 var characters = [];
 
@@ -39,7 +48,11 @@ characters.push(dick);
 
 function p1Attack() {
   characters[1].outcome(characters[0].attack(), characters[1].defense());
-  $("#p2Status").text(characters[1].hP);
+  if (characters[1].hP > 0) {
+      $("#p2Status").text(characters[1].hP);
+    } else {
+      $("#p2Status").text(characters[1].charName + " is dead!");
+    }
 };
 // function p1Defend() {
 //   max.defense();
@@ -47,7 +60,11 @@ function p1Attack() {
 // };
 function p2Attack() {
   characters[0].outcome(characters[1].attack(), characters[0].defense());
-  $("#p1Status").text(characters[0].hP);
+  if (characters[0].hP > 0) {
+      $("#p1Status").text(characters[0].hP);
+    } else {
+      $("#p1Status").text(characters[0].charName + " is dead!");
+    }
 };
 // function p2Defend() {
 //   dick.defense();
