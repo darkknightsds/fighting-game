@@ -1,0 +1,20 @@
+body{
+  background-image: url(../img/gametime.png);
+  background-size: 100% 100%;
+  background-position: center;
+  background-attachment:fixed;
+  background-repeat: no-repeat;
+}
+
+.btn{
+  border: solid 5px black;
+  margin-top:5%;
+  margin-left:5%;
+  padding: 20px 40px;
+  background-color: black;
+  color: #00ff00;
+  border-radius: 10px;
+}
+.btn:hover{
+  color:red;
+}

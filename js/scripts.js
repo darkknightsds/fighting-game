@@ -1,7 +1,9 @@
 //Back-end logic
 var switchTurns = function() {
+
   if (passivePlayer.hP <= 0) {alert(passivePlayer.charName + " has died.")}
   placeHolder = activePlayer;
+
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
@@ -24,17 +26,25 @@ function Character(charName, charImgUrl, hP, attackStat, attackModifier, defense
   this.defenseModifier = 0;
 };
 
-Character.prototype.attack = function(){
+Character.prototype.attack = function() {
   return this.attackStat + diceRoller(this.attackModifier);
 };
 
+
 Character.prototype.defense = function(){
   return this.defenseStat + this.defenseModifier;
+
 };
 
-Character.prototype.outcome = function(c1Attack, c2Defense){
+Character.prototype.death = function() {
+  $("#death-div").text("Foolish mortal! You are no match for me.");
+};
+
+Character.prototype.outcome = function(c1Attack, c2Defense) {
   if (c1Attack > c2Defense) {
+
     this.hP -= (c1Attack - c2Defense);
+
   }
   return this.hP;
 };
@@ -72,6 +82,7 @@ var toggleButtons = function() {
     }
   });
 };
+
 
 //Front-end logic
 $(document).ready(function() {
@@ -119,7 +130,9 @@ switchTurns();
   $(".attack").click(function() {
     attackButton();
   });
+
   $(".defend").click(function() {
     defendButton();
   });
+
 });
