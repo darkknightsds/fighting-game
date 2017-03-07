@@ -1,4 +1,8 @@
 //Back-end logic
+var activePlayer;
+var passivePlayer;
+var placeHolder;
+
 var switchTurns = function() {
   placeHolder = activePlayer;
   passivePlayer.defenseModifier = 0;
@@ -19,42 +23,30 @@ function Character(charName, hP, attackStat, attackModifier, defenseStat, defens
   this.defenseModifier = 0;
 };
 
-Character.prototype.attack = function(){
+Character.prototype.attack = function() {
   return this.attackStat + diceRoller(this.attackModifier);
 };
 
-Character.prototype.defense = function(){
+Character.prototype.defense = function() {
   return this.defenseStat;
 };
 
-Character.prototype.death = function(){
-  return this.charName + " is dead!";
+Character.prototype.death = function() {
+  $("#death-div").text("Foolish mortal! You are no match for me.");
 };
 
-Character.prototype.outcome = function(c1Attack, c2Defense){
+Character.prototype.outcome = function(c1Attack, c2Defense) {
   if (c1Attack > c2Defense) {
    return this.hP -= (c1Attack - c2Defense);
  } else {
    return 0;
  }
-  // if (this.hP <= 0) {
-  //   return this.charName + " is dead!";
-  // } else if (c1Attack > c2Defense) {
-  //   return this.hP -= (c1Attack - c2Defense);
-  // } else {
-  //   return 0;
-  // }
-    return this.hP -= (c1Attack - c2Defense);
-  } else {
-    return 0;
-  }
   if (this.hP < 0) {
     this.death();
   } else {
     switchTurns();
   }
 };
-
 
 var characters = [];
 
@@ -64,28 +56,28 @@ var dick = new Character("Dick", 100, 10, 5, 15);
 characters.push(dick);
 
 function p1Attack() {
-  characters[1].outcome(characters[0].attack(), characters[1].defense());
-  if (characters[1].hP > 0) {
-      $("#p2Status").text(characters[1].hP);
-    } else {
-      $("#p2Status").text(characters[1].charName + " is dead!");
-    }
-function attack() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  $("#p2Status").text(characters[1].hP);
+  if (passivePlayer.hP > 0) {
+      $("#p2Status").text(passivePlayer.hP);
+    } else {
+      $("#p2Status").text(passivePlayer.charName + " is dead!");
+    }
 };
+
+function p2Attack() {
+  passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
+  if (passivePlayer.hP > 0) {
+      $("#p1Status").text(passivePlayer.hP);
+    } else {
+      $("#p1Status").text(passivePlayer.charName + " is dead!");
+    }
+};
+
 // function p1Defend() {
 //   max.defense();
 //   $("#p1Status").text("P1 is choosing to defend.");
 // };
-function p2Attack() {
-  characters[0].outcome(characters[1].attack(), characters[0].defense());
-  if (characters[0].hP > 0) {
-      $("#p1Status").text(characters[0].hP);
-    } else {
-      $("#p1Status").text(characters[0].charName + " is dead!");
-    }
-};
+
 // function p2Defend() {
 //   dick.defense();
 //   $("#p2Status").text("P2 is choosing to defend.");
@@ -98,16 +90,20 @@ $(document).ready(function() {
     event.preventDefault();
     p1Attack();
   });
-  // $("#p1Defend").click(function() {
-  //   event.preventDefault();
-  //   p2Defend();
-  // });
+
   $("#p2Attack").click(function() {
     event.preventDefault();
     p2Attack();
   });
+
+  // $("#p1Defend").click(function() {
+  //   event.preventDefault();
+  //   p2Defend();
+  // });
+
   // $("#p2Defend").click(function() {
   //   event.preventDefault();
   //   p2Defend();
   // });
+
 });
