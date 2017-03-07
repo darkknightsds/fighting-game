@@ -2,7 +2,7 @@ Specs
 
 | Requirement |  Input   |  Output  | MVP |
 |----------|:--------:|:--------:|:--------:|
-| A character constructor consisting of name, hp, attack rating, defense rating, basic attacks | | | MVP |
+| A character constructor consisting of name, hp, attack rating, defense rating, basic attacks |  | | MVP |
 | 2 stock characters | | | MVP |
 | A character prototype to determine attack strength | | | MVP |
 | (A character prototype to determine defense) | | | MVP |
