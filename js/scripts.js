@@ -54,33 +54,14 @@ setInitialTurnOrder();
 
 function attackButton() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  $("#p1Status").text(activePlayer.hP);
+  $("#" + passivePlayer.charName + "Status").text(passivePlayer.hP);
   switchTurns();
 };
 
-function defend() {
+function defendButton() {
   activePlayer.defenseModifier = (activePlayer.defenseStat)/3;
   switchTurns();
 }
-// function p1Defend() {
-//   max.defense();
-//   $("#p1Status").text("P1 is choosing to defend.");
-// };
-function attack() {
-  characters[0].outcome(characters[1].attack(), characters[0].defense());
-  $("#p1Status").text(characters[0].hP);
-  switchTurns();
-};
-// function attack() {
-//   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-//   $("#p2Status").text(characters[1].hP);
-//   switchTurns();
-// };
-
-// function p2Defend() {
-//   dick.defense();
-//   $("#p2Status").text("P2 is choosing to defend.");
-// };
 
 var toggleButtons = function() {
   $(".btn").each(function() {
@@ -108,19 +89,22 @@ var populatePlayerInterface = function(player) {
                                       player.charName +
                                       '</h2>' +
                                     '</div>'
-                                  );
+  );
   $("div#playerStatus").append('<div class="col-md-6">' +
-                                  '<p id="' +
-                                  player.charName +
-                                  'Status">' +
+                                  '<p>Hit points: ' +
+                                    '<span id="' +
+                                    player.charName +
+                                    'Status">' +
+                                    player.hP +
+                                    '</span>' +
                                   '</p>' +
                                 '</div>'
-                              );
+  );
   $("div#playerControls").append('<div class="col-md-6">' +
                                     '<button class="btn attack" type="click">Attack</button>' +
                                     '<button class="btn defend" type="click">Defend</button>' +
                                   '</div>'
-                                );
+  );
 };
 
 populatePlayerInterface(activePlayer);
@@ -136,6 +120,6 @@ switchTurns();
     attackButton();
   });
   $(".defend").click(function() {
-    defend();
+    defendButton();
   });
 });
