@@ -1,14 +1,22 @@
 //Back-end logic
+var switchTurns = function() {
+  placeHolder = activePlayer;
+  passivePlayer.defenseModifier = 0;
+  activePlayer = passivePlayer;
+  passivePlayer = placeHolder;
+};
+
 var diceRoller = function(sides) {
   return Math.ceil(Math.random() * sides);
 };
 
-function Character(charName, hP, attackStat, attackModifier, defenseStat){
+function Character(charName, hP, attackStat, attackModifier, defenseStat, defenseModifier){
   this.charName = charName;
   this.hP = hP;
   this.attackStat = attackStat;
   this.attackModifier = attackModifier;
   this.defenseStat = defenseStat;
+  this.defenseModifier = 0;
 };
 
 Character.prototype.attack = function(){
@@ -36,6 +44,15 @@ Character.prototype.outcome = function(c1Attack, c2Defense){
   // } else {
   //   return 0;
   // }
+    return this.hP -= (c1Attack - c2Defense);
+  } else {
+    return 0;
+  }
+  if (this.hP < 0) {
+    this.death();
+  } else {
+    switchTurns();
+  }
 };
 
 
@@ -53,6 +70,9 @@ function p1Attack() {
     } else {
       $("#p2Status").text(characters[1].charName + " is dead!");
     }
+function attack() {
+  passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
+  $("#p2Status").text(characters[1].hP);
 };
 // function p1Defend() {
 //   max.defense();
