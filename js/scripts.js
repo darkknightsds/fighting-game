@@ -1,10 +1,5 @@
 //Back-end logic
-var activePlayer;
-var passivePlayer;
-var placeHolder;
-
 var switchTurns = function() {
-  placeHolder = activePlayer;
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
@@ -41,7 +36,7 @@ Character.prototype.outcome = function(c1Attack, c2Defense) {
  } else {
    return 0;
  }
-  if (this.hP < 0) {
+  if (this.hP <= 0) {
     this.death();
   } else {
     switchTurns();
@@ -54,6 +49,9 @@ var max = new Character("Max", 100, 10, 10, 10);
 characters.push(max);
 var dick = new Character("Dick", 100, 10, 5, 15);
 characters.push(dick);
+
+var activePlayer = characters[0];
+var passivePlayer = characters[1];
 
 function p1Attack() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
