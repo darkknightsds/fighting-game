@@ -1,9 +1,12 @@
 //Back-end logic
 var switchTurns = function() {
+  if (passivePlayer.hP <= 0) {alert(passivePlayer.charName + " has died.")}
   placeHolder = activePlayer;
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
+  console.log(activePlayer);
+  console.log(passivePlayer);
 };
 
 var diceRoller = function(sides) {
@@ -29,15 +32,9 @@ Character.prototype.defense = function(){
 
 Character.prototype.outcome = function(c1Attack, c2Defense){
   if (c1Attack > c2Defense) {
-    return this.hP -= (c1Attack - c2Defense);
-  } else {
-    return 0;
+    this.hP -= (c1Attack - c2Defense);
   }
-  if (this.hP < 0) {
-    this.death();
-  } else {
-    switchTurns();
-  }
+  return this.hP;
 };
 
 var characters = [];
@@ -46,15 +43,20 @@ var max = new Character("Max", 100, 10, 10, 10);
 characters.push(max);
 var dick = new Character("Dick", 100, 10, 5, 15);
 characters.push(dick);
+activePlayer = characters[0];
+passivePlayer = characters[1];
 
 function attack() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
   $("#p2Status").text(characters[1].hP);
+  switchTurns();
 };
 
 function defend() {
   activePlayer.defenseModifier = (activePlayer.defenseStat)/3;
   switchTurns();
+
+
 
 }
 // function p1Defend() {
@@ -64,6 +66,7 @@ function defend() {
 function p2Attack() {
   characters[0].outcome(characters[1].attack(), characters[0].defense());
   $("#p1Status").text(characters[0].hP);
+  switchTurns();
 };
 // function p2Defend() {
 //   dick.defense();
