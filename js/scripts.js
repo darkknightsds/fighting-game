@@ -18,15 +18,20 @@ var diceRoller = function(sides, rolls) {
   return sum;
 };
 
-function Character(charName, charImgUrl, hitPoints, attackStat, attackModifier, defenseStat, defenseModifier){
+function Character(charName, charID, charImgUrl, strength, vitality, agility, luck) {
   this.charName = charName;
-  this.charImgUrl = charImgUrl
-  this.hitPoints = hitPoints;
-  this.attackStat = attackStat;
-  this.attackModifier = attackModifier;
-  this.defenseStat = defenseStat;
+  this.charID = charID;
+  this.charImgUrl = charImgUrl;
+  this.strength = strength;
+  this.vitality = vitality;
+  this.agility = agility;
+  this.luck = luck;
+  this.hitPoints = vitality * 10;
+  this.attackStat = strength * 5;
+  this.attackModifier = strength * 5;
+  this.defenseStat = agility * 5;
   this.defenseModifier = 0;
-  this.specialPoints = 3;
+  this.specialPoints = luck;
 };
 
 Character.prototype.attack = function() {
@@ -61,10 +66,28 @@ Character.prototype.outcome = function(c1Attack, c2Defense) {
 
 var characters = [];
 
-var max = new Character("Max", "img/player1.jpg", 40, 10, 10, 10);
-characters.push(max);
-var dick = new Character("Dick", "img/player2.jpg", 40, 10, 5, 15);
-characters.push(dick);
+var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/player1.jpg", 7, 3, 3, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("Amtrak", "amtrak", "img/player2.jpg", 3, 3, 7, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("Semi-Gloss", "sg", "img/player1.jpg", 3, 7, 3, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("Thunder ghost", "tg", "img/player1.jpg", 3, 3, 3, 7);
+characters.push(newCharacter);
+var newCharacter = new Character("Shadow Dick", "sd", "img/player1.jpg", 4, 4, 4, 4);
+characters.push(newCharacter);
+var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/player1.jpg", 5, 5, 3, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/player1.jpg", 3, 5, 5, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("Loaded Chamber", "lc", "img/player1.jpg", 3, 3, 5, 5);
+characters.push(newCharacter);
+var newCharacter = new Character("Dynamite Force","df", "img/player1.jpg", 5, 3, 3, 5);
+characters.push(newCharacter);
+var newCharacter = new Character("Murder Saint", "ms", "img/player1.jpg", 5, 3, 5, 3);
+characters.push(newCharacter);
+var newCharacter = new Character("Sinister Savante", "ss", "img/player1.jpg", 3, 5, 3, 5);
+characters.push(newCharacter);
 
 var setInitialTurnOrder = function() {
   activePlayer = characters[0];
@@ -74,7 +97,7 @@ setInitialTurnOrder();
 
 function attackButtonAction() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  $("#" + passivePlayer.charName + "hitPoints").text(passivePlayer.hitPoints);
+  $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   switchTurns();
 };
 
@@ -82,15 +105,15 @@ function defendButtonAction() {
   activePlayer.defenseModifier = Math.floor((activePlayer.defenseStat)/3);
   if (activePlayer.specialPoints < 3) {
     activePlayer.specialPoints++;
-    $("#" + activePlayer.charName + "specialPoints").text(activePlayer.specialPoints);
+    $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
   }
   switchTurns();
 }
 
 function specialButtonAction() {
   passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
-  $("#" + passivePlayer.charName + "hitPoints").text(passivePlayer.hitPoints);
-  $("#" + activePlayer.charName + "specialPoints").text(activePlayer.specialPoints);
+  $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
+  $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
   switchTurns();
 }
 
@@ -115,7 +138,7 @@ var populatePlayerInterface = function(player) {
                                       '" alt="' +
                                       player.charName +
                                       '" id="' +
-                                      player.charName +
+                                      player.charID +
                                       'Image">' +
                                       '<h2>' +
                                       player.charName +
@@ -125,14 +148,14 @@ var populatePlayerInterface = function(player) {
   $("div#playerStatus").append('<div class="col-md-6">' +
                                   '<p>Hit points: ' +
                                     '<span id="' +
-                                    player.charName +
+                                    player.charID +
                                     'hitPoints">' +
                                     player.hitPoints +
                                     '</span>' +
                                   '</p>' +
                                   '<p>Special points: ' +
                                     '<span id="' +
-                                    player.charName +
+                                    player.charID +
                                     'specialPoints">' +
                                     player.specialPoints +
                                     '</span>' +
