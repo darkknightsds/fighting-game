@@ -89,9 +89,9 @@ characters.push(newCharacter);
 var newCharacter = new Character("Sinister Savante", "ss", "img/player1.jpg", 3, 5, 3, 5);
 characters.push(newCharacter);
 
-var setInitialTurnOrder = function() {
-  activePlayer = characters[0];
-  passivePlayer = characters[1];
+var setInitialTurnOrder = function(player1Selection, player2Selection) {
+  activePlayer = player1Selection;
+  passivePlayer = player2Selection;
 };
 setInitialTurnOrder();
 
@@ -130,61 +130,102 @@ var toggleButtons = function() {
 
 //Front-end logic
 $(document).ready(function() {
+  // debugger;
+  $("#player2form").hide();
+  $("#playSpace").hide();
 
-var populatePlayerInterface = function(player) {
-  $("div#playerInterface").append('<div class="col-md-6">' +
-                                      '<img src="' +
-                                      player.charImgUrl +
-                                      '" alt="' +
-                                      player.charName +
-                                      '" id="' +
-                                      player.charID +
-                                      'Image">' +
-                                      '<h2>' +
-                                      player.charName +
-                                      '</h2>' +
+
+for (i = 0; i < characters.length; i++) {
+  // if (characters[i].hitPoints > 0) {
+    $("select#p1Choices").append('<option value="' +
+                                    i +
+                                    '">' +
+                                    characters[i].charName +
+                                    '</option>'
+                                  );
+  // }
+}
+
+  $("#submitP1Selection").click(function() {
+    // debugger;
+    event.preventDefault();
+    $("#player1form").hide();
+    $("#player2form").show();
+    player1Selection = characters[$("#p1Choices").val()];
+    for (i = 0; i < characters.length; i++) {
+      if (characters[i].hitPoints > 0) {
+        $("select#p2Choices").append('<option value="' +
+                                        i +
+                                        '">' +
+                                        characters[i].charName +
+                                        '</option>'
+                                      );
+      }
+    }
+  });
+
+
+  $("#submitP2Selection").click(function() {
+    event.preventDefault();
+    $(".characterSelector").hide();
+    $(".playSpace").show();
+    player2Selection = characters[$("#p2Choices").val()];
+    setInitialTurnOrder(player1Selection, player2Selection);
+
+    var populatePlayerInterface = function(player) {
+      $("div#playerInterface").append('<div class="col-md-6">' +
+                                          '<img src="' +
+                                          player.charImgUrl +
+                                          '" alt="' +
+                                          player.charName +
+                                          '" id="' +
+                                          player.charID +
+                                          'Image">' +
+                                          '<h2>' +
+                                          player.charName +
+                                          '</h2>' +
+                                        '</div>'
+      );
+      $("div#playerStatus").append('<div class="col-md-6">' +
+                                      '<p>Hit points: ' +
+                                        '<span id="' +
+                                        player.charID +
+                                        'hitPoints">' +
+                                        player.hitPoints +
+                                        '</span>' +
+                                      '</p>' +
+                                      '<p>Special points: ' +
+                                        '<span id="' +
+                                        player.charID +
+                                        'specialPoints">' +
+                                        player.specialPoints +
+                                        '</span>' +
+                                      '</p>' +
                                     '</div>'
-  );
-  $("div#playerStatus").append('<div class="col-md-6">' +
-                                  '<p>Hit points: ' +
-                                    '<span id="' +
-                                    player.charID +
-                                    'hitPoints">' +
-                                    player.hitPoints +
-                                    '</span>' +
-                                  '</p>' +
-                                  '<p>Special points: ' +
-                                    '<span id="' +
-                                    player.charID +
-                                    'specialPoints">' +
-                                    player.specialPoints +
-                                    '</span>' +
-                                  '</p>' +
-                                '</div>'
-  );
-  $("div#playerControls").append('<div class="col-md-6">' +
-                                    '<button class="btn attack" type="click">Attack</button>' +
-                                    '<button class="btn defend" type="click">Defend</button>' +
-                                    '<button class="btn special" type="click">Special</button>' +
-                                  '</div>'
-  );
-};
+      );
+      $("div#playerControls").append('<div class="col-md-6">' +
+                                        '<button class="btn attack" type="click">Attack</button>' +
+                                        '<button class="btn defend" type="click">Defend</button>' +
+                                        '<button class="btn special" type="click">Special</button>' +
+                                      '</div>'
+      );
+    };
 
-populatePlayerInterface(activePlayer);
-switchTurns();
-populatePlayerInterface(activePlayer);
-switchTurns();
+    populatePlayerInterface(activePlayer);
+    switchTurns();
+    populatePlayerInterface(activePlayer);
+    switchTurns();
 
-  $(".attack").click(function() {
-    attackButtonAction();
+      $(".attack").click(function() {
+        attackButtonAction();
+      });
+
+      $(".defend").click(function() {
+        defendButtonAction();
+      });
+
+      $(".special").click(function() {
+        specialButtonAction();
+      });
   });
-
-  $(".defend").click(function() {
-    defendButtonAction();
-  });
-
-  $(".special").click(function() {
-    specialButtonAction();
-  });
-
 });

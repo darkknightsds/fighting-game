@@ -9,16 +9,32 @@
 </head>
 <body>
   <div class="container">
-    <div class="row" id="playerInterface">
+    <div class="characterSelector">
+      <form id="player1form">
+        <p>Player 1, select your character:</p>
+        <select id="p1Choices">
+        </select>
+        <button id="submitP1Selection" type="click">Submit</button>
+      </form>
+      <form id="player2form">
+        <p>Player 2, select your character:</p>
+        <select id="p2Choices">
+        </select>
+        <button id="submitP2Selection" type="click">Submit</button>
+      </form>
     </div>
-    <div class="row" id="playerStatus">
-    </div>
-    <div class="row" id="playerControls">
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h2 id="death-div"></h2>
+    <div class="playSpace">
+      <div class="row" id="playerInterface">
       </div>
+      <div class="row" id="playerStatus">
+      </div>
+      <div class="row" id="playerControls">
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 id="death-div"></h2>
+        </div>
+    </div>
     </div>
   </div>
 </body>
