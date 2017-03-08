@@ -1,9 +1,7 @@
 //Back-end logic
 var switchTurns = function() {
-
-  if (passivePlayer.hP <= 0) {alert(passivePlayer.charName + " has died.")}
+  if (passivePlayer.hitPoints <= 0) {alert(passivePlayer.charName + " has died.")}
   placeHolder = activePlayer;
-
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
@@ -12,28 +10,40 @@ var switchTurns = function() {
   toggleButtons();
 };
 
-var diceRoller = function(sides) {
-  return Math.ceil(Math.random() * sides);
+var diceRoller = function(sides, rolls) {
+  var sum = 0;
+  for (i = 1; i <= rolls; i++) {
+    sum += Math.ceil(Math.random() * sides);
+  }
+  return sum;
 };
 
-function Character(charName, charImgUrl, hP, attackStat, attackModifier, defenseStat, defenseModifier){
+function Character(charName, charImgUrl, hitPoints, attackStat, attackModifier, defenseStat, defenseModifier){
   this.charName = charName;
   this.charImgUrl = charImgUrl
-  this.hP = hP;
+  this.hitPoints = hitPoints;
   this.attackStat = attackStat;
   this.attackModifier = attackModifier;
   this.defenseStat = defenseStat;
   this.defenseModifier = 0;
+  this.specialPoints = 3;
 };
 
 Character.prototype.attack = function() {
-  return this.attackStat + diceRoller(this.attackModifier);
+  return this.attackStat + diceRoller(this.attackModifier, 1);
 };
-
 
 Character.prototype.defense = function(){
   return this.defenseStat + this.defenseModifier;
+};
 
+Character.prototype.special = function() {
+  if (this.specialPoints >= 1) {
+    this.specialPoints--;
+    return this.attackStat + diceRoller(this.attackModifier, 2);
+  } else {
+    alert("You're too tired for special attacks! A swing and a miss!");
+  }
 };
 
 Character.prototype.death = function() {
@@ -43,17 +53,17 @@ Character.prototype.death = function() {
 Character.prototype.outcome = function(c1Attack, c2Defense) {
   if (c1Attack > c2Defense) {
 
-    this.hP -= (c1Attack - c2Defense);
+    this.hitPoints -= (c1Attack - c2Defense);
 
   }
-  return this.hP;
+  return this.hitPoints;
 };
 
 var characters = [];
 
-var max = new Character("Max", "img/player1.jpg", 100, 10, 10, 10);
+var max = new Character("Max", "img/player1.jpg", 40, 10, 10, 10);
 characters.push(max);
-var dick = new Character("Dick", "img/player2.jpg", 100, 10, 5, 15);
+var dick = new Character("Dick", "img/player2.jpg", 40, 10, 5, 15);
 characters.push(dick);
 
 var setInitialTurnOrder = function() {
@@ -62,14 +72,25 @@ var setInitialTurnOrder = function() {
 };
 setInitialTurnOrder();
 
-function attackButton() {
+function attackButtonAction() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
-  $("#" + passivePlayer.charName + "Status").text(passivePlayer.hP);
+  $("#" + passivePlayer.charName + "hitPoints").text(passivePlayer.hitPoints);
   switchTurns();
 };
 
-function defendButton() {
-  activePlayer.defenseModifier = (activePlayer.defenseStat)/3;
+function defendButtonAction() {
+  activePlayer.defenseModifier = Math.floor((activePlayer.defenseStat)/3);
+  if (activePlayer.specialPoints < 3) {
+    activePlayer.specialPoints++;
+    $("#" + activePlayer.charName + "specialPoints").text(activePlayer.specialPoints);
+  }
+  switchTurns();
+}
+
+function specialButtonAction() {
+  passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
+  $("#" + passivePlayer.charName + "hitPoints").text(passivePlayer.hitPoints);
+  $("#" + activePlayer.charName + "specialPoints").text(activePlayer.specialPoints);
   switchTurns();
 }
 
@@ -105,8 +126,15 @@ var populatePlayerInterface = function(player) {
                                   '<p>Hit points: ' +
                                     '<span id="' +
                                     player.charName +
-                                    'Status">' +
-                                    player.hP +
+                                    'hitPoints">' +
+                                    player.hitPoints +
+                                    '</span>' +
+                                  '</p>' +
+                                  '<p>Special points: ' +
+                                    '<span id="' +
+                                    player.charName +
+                                    'specialPoints">' +
+                                    player.specialPoints +
                                     '</span>' +
                                   '</p>' +
                                 '</div>'
@@ -114,6 +142,7 @@ var populatePlayerInterface = function(player) {
   $("div#playerControls").append('<div class="col-md-6">' +
                                     '<button class="btn attack" type="click">Attack</button>' +
                                     '<button class="btn defend" type="click">Defend</button>' +
+                                    '<button class="btn special" type="click">Special</button>' +
                                   '</div>'
   );
 };
@@ -123,16 +152,16 @@ switchTurns();
 populatePlayerInterface(activePlayer);
 switchTurns();
 
-
-  $("#p1Name").text((characters[0].charName));
-  $("#p2Name").text((characters[1].charName));
-
   $(".attack").click(function() {
-    attackButton();
+    attackButtonAction();
   });
 
   $(".defend").click(function() {
-    defendButton();
+    defendButtonAction();
+  });
+
+  $(".special").click(function() {
+    specialButtonAction();
   });
 
 });
