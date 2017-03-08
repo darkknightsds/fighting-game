@@ -66,27 +66,27 @@ Character.prototype.outcome = function(c1Attack, c2Defense) {
 
 var characters = [];
 
-var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/player1.jpg", 7, 3, 3, 3);
+var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/mega-mutant-mountain-master.jpg", 7, 3, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Amtrak", "amtrak", "img/player2.jpg", 3, 3, 7, 3);
+var newCharacter = new Character("Amtrak", "amtrak", "img/amtrak.jpg", 3, 3, 7, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Semi-Gloss", "sg", "img/player1.jpg", 3, 7, 3, 3);
+var newCharacter = new Character("Semi-Gloss", "sg", "img/semi-gloss.jpg", 3, 7, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Thunder ghost", "tg", "img/player1.jpg", 3, 3, 3, 7);
+var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg", 3, 3, 3, 7);
 characters.push(newCharacter);
-var newCharacter = new Character("Shadow Dick", "sd", "img/player1.jpg", 4, 4, 4, 4);
+var newCharacter = new Character("Shadow Dick", "sd", "img/shadow-dick.jpg", 4, 4, 4, 4);
 characters.push(newCharacter);
-var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/player1.jpg", 5, 5, 3, 3);
+var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infector.jpg", 5, 5, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/player1.jpg", 3, 5, 5, 3);
+var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/the-cat-and-the-gat.jpg", 3, 5, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Loaded Chamber", "lc", "img/player1.jpg", 3, 3, 5, 5);
+var newCharacter = new Character("Loaded Chamber", "lc", "img/loaded-chamber.jpg", 3, 3, 5, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Dynamite Force","df", "img/player1.jpg", 5, 3, 3, 5);
+var newCharacter = new Character("Dynamite Force","df", "img/dynamite-force.jpg", 5, 3, 3, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Murder Saint", "ms", "img/player1.jpg", 5, 3, 5, 3);
+var newCharacter = new Character("Murder Saint", "ms", "img/murder-saint.jpg", 5, 3, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Sinister Savante", "ss", "img/player1.jpg", 3, 5, 3, 5);
+var newCharacter = new Character("Sinister Savante", "ss", "img/sinister-savante.jpg", 3, 5, 3, 5);
 characters.push(newCharacter);
 
 var setInitialTurnOrder = function(player1Selection, player2Selection) {
