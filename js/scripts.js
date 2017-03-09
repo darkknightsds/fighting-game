@@ -1,13 +1,15 @@
 //Back-end logic
+var turnCounter=1;
 var switchTurns = function() {
-  if (passivePlayer.hitPoints <= 0) {alert(passivePlayer.charName + " has died.")}
+  if (passivePlayer.hitPoints <= 0) {
+    alert(passivePlayer.charName + " has died.");
+  }
   placeHolder = activePlayer;
   passivePlayer.defenseModifier = 0;
   activePlayer = passivePlayer;
   passivePlayer = placeHolder;
-  console.log(activePlayer);
-  console.log(passivePlayer);
-  toggleButtons();
+  turnCounter++;
+  countTurn();
 };
 
 var diceRoller = function(sides, rolls) {
@@ -98,6 +100,64 @@ setInitialTurnOrder();
 function attackButtonAction() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
+  if ((turnCounter %2) != 0 && (passivePlayer.hitPoints <=0)) {
+    console.log(passivePlayer.hitPoints)
+  move("#img1")
+    .x(400)
+    .y(0)
+    .ease('in-out')
+    .then()
+    .x(-400)
+    .then()
+    .y(-0)
+    .duration('2s')
+    .pop()
+    .pop()
+    .end();
+  $("#img2").addClass('animated hinge');
+} else if ((turnCounter %2) != 0) {
+  move("#img1")
+    .x(400)
+    .y(0)
+    .ease('in-out')
+    .then()
+    .x(-400)
+    .then()
+    .y(-0)
+    .duration('2s')
+    .pop()
+    .pop()
+    .end();
+} else if ((turnCounter %2) === 0 && (passivePlayer.hitPoints <=0)) {
+  move("#img2")
+    .x(-400)
+    .y(0)
+    .ease('in-out')
+    .then()
+    .x(400)
+    .then()
+    .y(-0)
+    .duration('2s')
+    .pop()
+    .pop()
+    .end();
+    $("#img1").addClass('animated hinge');
+  } else if ((turnCounter %2) === 0) {
+    move("#img2")
+      .x(-400)
+      .y(0)
+      .ease('in-out')
+      .then()
+      .x(400)
+      .then()
+      .y(-0)
+      .duration('2s')
+      .pop()
+      .pop()
+      .end();
+  } else {
+    console.log("Done")
+  }
   switchTurns();
 };
 
@@ -106,6 +166,37 @@ function defendButtonAction() {
   if (activePlayer.specialPoints < 3) {
     activePlayer.specialPoints++;
     $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
+  } else {
+    console.log("Done");
+  }
+  if ((turnCounter %2) != 0) {
+    move("#img1")
+    .x(100)
+    .y(0)
+    .ease('in-out')
+    .then()
+    .x(-100)
+    .then()
+    .y(-0)
+    .duration('2s')
+    .pop()
+    .pop()
+    .end();
+  } else if ((turnCounter %2) === 0) {
+    move("#img2")
+    .x(-100)
+    .y(0)
+    .ease('in-out')
+    .then()
+    .x(100)
+    .then()
+    .y(-0)
+    .duration('2s')
+    .pop()
+    .pop()
+    .end();
+  } else {
+    console.log("Done")
   }
   switchTurns();
 }
@@ -114,23 +205,48 @@ function specialButtonAction() {
   passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
+  if ((turnCounter %2) != 0 && (passivePlayer.hitPoints <=0)) {
+  move("#img1")
+  .rotate(360)
+  .end();
+  $("#img2").addClass('animated hinge');
+} else if ((turnCounter %2) != 0){
+  move("#img1")
+  .rotate(360)
+  .end();
+} else if ((turnCounter %2) === 0 && (passivePlayer.hitPoints <=0)) {
+    move("#img2")
+    .rotate(360)
+    .end();
+    $("#img1").addClass('animated hinge');
+  } else if ((turnCounter %2) === 0) {
+    move("#img2")
+    .rotate(360)
+    .end();
+  }
+  else {
+    console.log("Done")
+  }
   switchTurns();
 }
 
-var toggleButtons = function() {
-  $(".btn").each(function() {
-    if (this.hasAttribute("disabled")) {
-      $(this).prop("disabled", false);
-    } else {
-      $(this).prop("disabled", true);
-    }
-  });
+var countTurn = function(){
+if ((turnCounter %2) != 0){
+  $(".attack1, .defend1, .special1").show();
+  $(".attack2, .defend2, .special2").hide();
+}
+else if ((turnCounter %2) === 0){
+    $(".attack1, .defend1, .special1").hide();
+    $(".attack2, .defend2, .special2").show();
+  }
 };
+
+
+console.log(turnCounter);
 
 
 //Front-end logic
 $(document).ready(function() {
-  // debugger;
   $("#player2form").hide();
   $("#playSpace").hide();
   $("#submitP1Selection").hide();
@@ -138,14 +254,12 @@ $(document).ready(function() {
 
 
 for (i = 0; i < characters.length; i++) {
-  // if (characters[i].hitPoints > 0) {
     $("select#p1Choices").append('<option value="' +
                                     i +
                                     '">' +
                                     characters[i].charName +
                                     '</option>'
                                   );
-  // }
 }
 
 $("#p1Choices").change(function() {
@@ -197,63 +311,106 @@ $("#p2Choices").change(function() {
                                       );
       }
     }
-
-
-
   });
 
+var populatePlayerInterface = function(player1, player2) {
+  $("div#img1").append(
+                                      '<img src="' +
+                                      player1.charImgUrl +
+                                      '" alt="' +
+                                      player1.charName +
+                                      '" id="' +
+                                      player1.charID +
+                                      'Image">'
+                                    );
+  $("div#img2").append(
+                                      '<img src="' +
+                                      player2.charImgUrl +
+                                      '" alt="' +
+                                      player2.charName +
+                                      '" id="' +
+                                      player2.charID +
+                                      'Image">'
 
-  $("#submitP2Selection").click(function() {
-    event.preventDefault();
-    $(".characterSelector").hide();
-    $(".playSpace").show();
-    player2Selection = characters[$("#p2Choices").val()];
-    setInitialTurnOrder(player1Selection, player2Selection);
+                                    );
+  $("#playerStatus1").append(
+                                        '<h2>' +
+                                        player1.charName +
+                                        '</h2>' +
+                                        '<p>Hit points: ' +
+                                          '<span id="' +
+                                          player1.charID +
+                                          'hitPoints">' +
+                                          player1.hitPoints +
+                                          '</span>' +
+                                        '</p>' +
+                                        '<p>Special points: ' +
+                                          '<span id="' +
+                                          player1.charID +
+                                          'specialPoints">' +
+                                          player1.specialPoints +
+                                          '</span>' +
+                                        '</p>'
+  );
 
-    var populatePlayerInterface = function(player) {
-      $("div#playerInterface").append('<div class="col-md-6">' +
-                                          '<img src="' +
-                                          player.charImgUrl +
-                                          '" alt="' +
-                                          player.charName +
-                                          '" id="' +
-                                          player.charID +
-                                          'Image">' +
-                                          '<h2>' +
-                                          player.charName +
-                                          '</h2>' +
-                                        '</div>'
-      );
-      $("div#playerStatus").append('<div class="col-md-6">' +
-                                      '<p>Hit points: ' +
-                                        '<span id="' +
-                                        player.charID +
-                                        'hitPoints">' +
-                                        player.hitPoints +
-                                        '</span>' +
-                                      '</p>' +
-                                      '<p>Special points: ' +
-                                        '<span id="' +
-                                        player.charID +
-                                        'specialPoints">' +
-                                        player.specialPoints +
-                                        '</span>' +
-                                      '</p>' +
-                                    '</div>'
-      );
-      $("div#playerControls").append('<div class="col-md-6">' +
-                                        '<button class="btn attack" type="click">Attack</button>' +
-                                        '<button class="btn defend" type="click">Defend</button>' +
-                                        '<button class="btn special" type="click">Special</button>' +
-                                      '</div>'
-      );
-    };
+  $("#playerStatus2").append(
+                                        '<h2>' +
+                                        player2.charName +
+                                        '</h2>' +
+                                        '<p>Hit points: ' +
+                                          '<span id="' +
+                                          player2.charID +
+                                          'hitPoints">' +
+                                          player2.hitPoints +
+                                          '</span>' +
+                                        '</p>' +
+                                        '<p>Special points: ' +
+                                          '<span id="' +
+                                          player2.charID +
+                                          'specialPoints">' +
+                                          player2.specialPoints +
+                                          '</span>' +
+                                        '</p>'
+  );
 
-    populatePlayerInterface(activePlayer);
-    switchTurns();
-    populatePlayerInterface(activePlayer);
-    switchTurns();
+  $("#playerControls1").append(
 
+                                    '<button class="btn attack1" type="click">Attack</button>' +
+                                    '<button class="btn defend1" type="click">Defend</button>' +
+                                    '<button class="btn special1" type="click">Special</button>'
+  );
+  $("#playerControls2").append(
+
+                                    '<button class="btn attack2" type="click">Attack</button>' +
+                                    '<button class="btn defend2" type="click">Defend</button>' +
+                                    '<button class="btn special2" type="click">Special</button>'
+
+  );
+};
+
+populatePlayerInterface(activePlayer, passivePlayer);
+
+  $(".attack1").click(function() {
+    attackButtonAction();
+  });
+
+  $(".defend1").click(function() {
+    defendButtonAction();
+  });
+
+  $(".special1").click(function() {
+    specialButtonAction();
+  });
+  $(".attack2").click(function() {
+    attackButtonAction();
+
+  $(".defend2").click(function() {
+    defendButtonAction();
+  });
+
+  $(".special2").click(function() {
+    specialButtonAction();
+  });
       $(".attack").click(function() {
         attackButtonAction();
       });
