@@ -2,6 +2,11 @@ body {
   background-color: #000000;
   font-family: 'Metal Mania', cursive;
   color: #FFFFFF;
+  background-image: url(../img/background.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: fixed;
 }
 .game-title {
   text-align: center;
