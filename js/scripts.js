@@ -58,7 +58,7 @@ Character.prototype.special = function() {
 };
 
 Character.prototype.death = function() {
-  $("#death-div").append('<p>' + passivePlayer.charName + ' has died.</p>');
+  $("#death-div").append('<p>' + passivePlayer.charName + ' has <span class="dead">died.</span></p>');
   if (activePlayer === player1Selection) {
     $("#death-div").append('<p>Player 1, you are victorious!</p>');
     $("#death-div").append('<p>Click the button to receive the next challenger.</p>');
@@ -411,6 +411,7 @@ var populatePlayerInterface = function(player1, player2) {
                                     '<button class="btn special2" type="click">Special</button>'
 
   );
+  $(".attack2, .defend2, .special2").hide();
 };
 
 
