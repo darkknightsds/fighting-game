@@ -92,27 +92,27 @@ Character.prototype.outcome = function(c1Attack, c2Defense) {
 
 var characters = [];
 
-var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/mega-mutant-mountain-master.jpg", 7, 3, 3, 3);
+var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/mega-mutant-mountain-master.jpg", 7, 4, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Amtrak", "amtrak", "img/amtrak.jpg", 3, 3, 7, 3);
+var newCharacter = new Character("Amtrak", "amtrak", "img/amtrak.jpg", 3, 4, 7, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Semi-Gloss", "sg", "img/semi-gloss.jpg", 3, 7, 3, 3);
+var newCharacter = new Character("Semi-Gloss", "sg", "img/semi-gloss.jpg", 3, 8, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg", 3, 3, 3, 7);
+var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg", 3, 4, 3, 7);
 characters.push(newCharacter);
-var newCharacter = new Character("Pula Umbra", "pu", "img/pula-umbra.jpg", 4, 4, 4, 4);
+var newCharacter = new Character("Pula Umbra", "pu", "img/pula-umbra.jpg", 4, 5, 4, 4);
 characters.push(newCharacter);
-var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infecter.jpg", 5, 5, 3, 3);
+var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infecter.jpg", 5, 6, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/the-cat-and-the-gat.jpg", 3, 5, 5, 3);
+var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/the-cat-and-the-gat.jpg", 3, 6, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Loaded Chamber", "lc", "img/loaded-chamber.jpg", 3, 3, 5, 5);
+var newCharacter = new Character("Loaded Chamber", "lc", "img/loaded-chamber.jpg", 3, 4, 5, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Dynamite Force","df", "img/dynamite-force.jpg", 5, 3, 3, 5);
+var newCharacter = new Character("Dynamite Force","df", "img/dynamite-force.jpg", 5, 4, 3, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Murder Saint", "ms", "img/murder-saint.jpg", 5, 3, 5, 3);
+var newCharacter = new Character("Murder Saint", "ms", "img/murder-saint.jpg", 5, 4, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Sinister Savante", "ss", "img/sinister-savante.jpg", 3, 5, 3, 5);
+var newCharacter = new Character("Sinister Savante", "ss", "img/sinister-savante.jpg", 3, 6, 3, 5);
 characters.push(newCharacter);
 
 var setInitialTurnOrder = function(player1Selection, player2Selection) {
@@ -233,29 +233,36 @@ function specialButtonAction() {
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
   if ((turnCounter %2) != 0
-  && (passivePlayer.hitPoints <=0))
-
-  {
+  && (passivePlayer.hitPoints <=0)) {
   move("#img1")
-  .rotate(360)
-  .end();
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
+    .end();
   $("#img2").addClass('animated hinge');
 
 } else if ((turnCounter %2) != 0){
   move("#img1")
-  .rotate(360)
-  .end();
-} else if ((turnCounter %2) === 0
-&& (passivePlayer.hitPoints <=0))
-
- {
-    move("#img2")
-    .rotate(360)
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
+    .end();
+} else if ((turnCounter %2) === 0 && (passivePlayer.hitPoints <=0)) {
+  move("#img2")
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
     .end();
     $("#img1").addClass('animated hinge');
   } else if ((turnCounter %2) === 0) {
-    move("#img2")
-    .rotate(360)
+  move("#img2")
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
     .end();
   }
   else {
@@ -303,7 +310,7 @@ $("#p1Choices").change(function() {
                         '<p> Luck: ' + characters[index].luck + '</p>' +
                         '<p> Hit Points: ' + characters[index].hitPoints + '</p>' +
                         '<p> Base Attack: ' + characters[index].attackStat + '</p>' +
-                        '<p> Base Attack: ' + characters[index].defenseStat + '</p>' +
+                        '<p> Defense: ' + characters[index].defenseStat + '</p>' +
                         '<p> Special Attack Points: ' + characters[index].specialPoints + '</p>'
   );
   $("#submitP1Selection").show();
@@ -319,7 +326,7 @@ $("#p2Choices").change(function() {
                         '<p> Luck: ' + characters[index].luck + '</p>' +
                         '<p> Hit Points: ' + characters[index].hitPoints + '</p>' +
                         '<p> Base Attack: ' + characters[index].attackStat + '</p>' +
-                        '<p> Base Attack: ' + characters[index].defenseStat + '</p>' +
+                        '<p> Defense: ' + characters[index].defenseStat + '</p>' +
                         '<p> Special Attack Points: ' + characters[index].specialPoints + '</p>'
   );
   $("#submitP2Selection").show();
