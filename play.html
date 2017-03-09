@@ -9,28 +9,28 @@
 </head>
 <body>
   <div class="container">
-    <div class="title">
-      <h1>CMS</h1>
-      <h2>COMBAT - MANAGEMENT - SYSTEM</h2>
+    <div class="game-title">
+      <h1 id="main-title">C-M-S</h1>
+      <h2 id ="expanded-title">COMBAT MANAGEMENT SYSTEM</h2>
     </div>
     <div class="characterSelector">
       <form id="player1form">
-        <p>Player 1, select a character to preview:</p>
+        <p class="preview-player">Player 1, select a character to preview:</p>
         <select id="p1Choices">
           <option selected disabled hidden>Choose here</option>
         </select>
         <div id="p1Preview">
         </div>
-        <button id="submitP1Selection" type="click">Submit</button>
+        <button id="submitP1Selection" type="click" class="select-button">Select</button>
       </form>
       <form id="player2form">
-        <p>Player 2, select a character to preview:</p>
+        <p class="preview-player">Player 2, select a character to preview:</p>
         <select id="p2Choices">
           <option selected disabled hidden>Choose here</option>
         </select>
         <div id="p2Preview">
         </div>
-        <button id="submitP2Selection" type="click">Submit</button>
+        <button id="submitP2Selection" type="click" class="select-button">Select</button>
       </form>
     </div>
     <div class="playSpace">
