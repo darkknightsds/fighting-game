@@ -8,31 +8,61 @@
 </head>
 <body>
   <div class="container">
-    <div class="row">
-      <div id="img1" class="col-md-6">
+    <!-- <<<<<<< HEAD -->
+    <div class="characterSelector">
+      <form id="player1form">
+        <p>Player 1, select your character:</p>
+        <select id="p1Choices">
+        </select>
+        <button id="submitP1Selection" type="click">Submit</button>
+      </form>
+      <form id="player2form">
+        <p>Player 2, select your character:</p>
+        <select id="p2Choices">
+        </select>
+        <button id="submitP2Selection" type="click">Submit</button>
+      </form>
+    </div>
+    <div class="playSpace">
+      <div class="row">
+        <div id="img1" class="col-md-6">
+        </div>
+        <div id="img2" class="col-md-6">
+        </div>
       </div>
-      <div id="img2" class="col-md-6">
+      <div class="row">
+        <div id="playerStatus1" class="col-md-6">
+
+        </div>
+        <div id="playerStatus2" class="col-md-6">
+
+        </div>
       </div>
+      <div class="row">
+        <div id="playerControls1"class="col-md-6">
+
+        </div>
+        <div id="playerControls2"class="col-md-6">
+
+          <!-- =======
+
+          <div class="playSpace">
+          <div class="row" id="playerInterface">
+        </div>
+        <div class="row" id="playerStatus">
+        >>>>>>> master -->
+      </div>
+      <!-- <div class="row" id="playerControls"> -->
     </div>
     <div class="row">
-      <div id="playerStatus1" class="col-md-6">
-
-      </div>
-      <div id="playerStatus2" class="col-md-6">
-
+      <div class="col-md-12">
+        <h2 id="death-div"></h2>
       </div>
     </div>
-    <div class="row">
-      <div id="playerControls1"class="col-md-6">
-
-      </div>
-      <div id="playerControls2"class="col-md-6">
-
-      </div>
-    </div>
-    <script src="js/jquery-3.1.1.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/move.js"></script>
   </div>
+  <script src="js/jquery-3.1.1.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="js/move.js"></script>
+</div>
 </body>
 </html>

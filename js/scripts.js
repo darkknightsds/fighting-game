@@ -68,34 +68,32 @@ Character.prototype.outcome = function(c1Attack, c2Defense) {
 
 var characters = [];
 
-
-
-var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/player1.jpg", 7, 3, 3, 3);
+var newCharacter = new Character("MegaMutant Mountain Master", "mmmm", "img/mega-mutant-mountain-master.jpg", 7, 3, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Amtrak", "amtrak", "img/player2.jpg", 3, 3, 7, 3);
+var newCharacter = new Character("Amtrak", "amtrak", "img/amtrak.jpg", 3, 3, 7, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Semi-Gloss", "sg", "img/player1.jpg", 3, 7, 3, 3);
+var newCharacter = new Character("Semi-Gloss", "sg", "img/semi-gloss.jpg", 3, 7, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Thunder ghost", "tg", "img/player1.jpg", 3, 3, 3, 7);
+var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg", 3, 3, 3, 7);
 characters.push(newCharacter);
-var newCharacter = new Character("Shadow Dick", "sd", "img/player1.jpg", 4, 4, 4, 4);
+var newCharacter = new Character("Shadow Dick", "sd", "img/shadow-dick.jpg", 4, 4, 4, 4);
 characters.push(newCharacter);
-var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/player1.jpg", 5, 5, 3, 3);
+var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infector.jpg", 5, 5, 3, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/player1.jpg", 3, 5, 5, 3);
+var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/the-cat-and-the-gat.jpg", 3, 5, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Loaded Chamber", "lc", "img/player1.jpg", 3, 3, 5, 5);
+var newCharacter = new Character("Loaded Chamber", "lc", "img/loaded-chamber.jpg", 3, 3, 5, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Dynamite Force","df", "img/player1.jpg", 5, 3, 3, 5);
+var newCharacter = new Character("Dynamite Force","df", "img/dynamite-force.jpg", 5, 3, 3, 5);
 characters.push(newCharacter);
-var newCharacter = new Character("Murder Saint", "ms", "img/player1.jpg", 5, 3, 5, 3);
+var newCharacter = new Character("Murder Saint", "ms", "img/murder-saint.jpg", 5, 3, 5, 3);
 characters.push(newCharacter);
-var newCharacter = new Character("Sinister Savante", "ss", "img/player1.jpg", 3, 5, 3, 5);
+var newCharacter = new Character("Sinister Savante", "ss", "img/sinister-savante.jpg", 3, 5, 3, 5);
 characters.push(newCharacter);
 
-var setInitialTurnOrder = function() {
-  activePlayer = characters[0];
-  passivePlayer = characters[1];
+var setInitialTurnOrder = function(player1Selection, player2Selection) {
+  activePlayer = player1Selection;
+  passivePlayer = player2Selection;
 };
 setInitialTurnOrder();
 
@@ -173,11 +171,11 @@ function defendButtonAction() {
   }
   if ((turnCounter %2) != 0) {
     move("#img1")
-    .x(400)
+    .x(100)
     .y(0)
     .ease('in-out')
     .then()
-    .x(-400)
+    .x(-100)
     .then()
     .y(-0)
     .duration('2s')
@@ -186,11 +184,11 @@ function defendButtonAction() {
     .end();
   } else if ((turnCounter %2) === 0) {
     move("#img2")
-    .x(-400)
+    .x(-100)
     .y(0)
     .ease('in-out')
     .then()
-    .x(400)
+    .x(100)
     .then()
     .y(-0)
     .duration('2s')
@@ -207,15 +205,26 @@ function specialButtonAction() {
   passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
-  if ((turnCounter %2) != 0) {
+  if ((turnCounter %2) != 0 && (passivePlayer.hitPoints <=0)) {
   move("#img1")
   .rotate(360)
   .end();
+  $("#img2").addClass('animated hinge');
+} else if ((turnCounter %2) != 0){
+  move("#img1")
+  .rotate(360)
+  .end();
+} else if ((turnCounter %2) === 0 && (passivePlayer.hitPoints <=0)) {
+    move("#img2")
+    .rotate(360)
+    .end();
+    $("#img1").addClass('animated hinge');
   } else if ((turnCounter %2) === 0) {
     move("#img2")
     .rotate(360)
     .end();
-  } else {
+  }
+  else {
     console.log("Done")
   }
   switchTurns();
@@ -238,6 +247,43 @@ console.log(turnCounter);
 
 //Front-end logic
 $(document).ready(function() {
+  $("#player2form").hide();
+  $("#playSpace").hide();
+
+
+for (i = 0; i < characters.length; i++) {
+    $("select#p1Choices").append('<option value="' +
+                                    i +
+                                    '">' +
+                                    characters[i].charName +
+                                    '</option>'
+                                  );
+}
+
+$("#submitP1Selection").click(function() {
+  event.preventDefault();
+  $("#player1form").hide();
+  $("#player2form").show();
+  player1Selection = characters[$("#p1Choices").val()];
+  for (i = 0; i < characters.length; i++) {
+    if (characters[i].hitPoints > 0) {
+      $("select#p2Choices").append('<option value="' +
+                                      i +
+                                      '">' +
+                                      characters[i].charName +
+                                      '</option>'
+                                    );
+    }
+  }
+});
+
+
+$("#submitP2Selection").click(function() {
+  event.preventDefault();
+  $(".characterSelector").hide();
+  $(".playSpace").show();
+  player2Selection = characters[$("#p2Choices").val()];
+  setInitialTurnOrder(player1Selection, player2Selection);
 
 var populatePlayerInterface = function(player1, player2) {
   $("div#img1").append(
@@ -338,5 +384,17 @@ populatePlayerInterface(activePlayer, passivePlayer);
   $(".special2").click(function() {
     specialButtonAction();
   });
-//
+
+      $(".attack").click(function() {
+        attackButtonAction();
+      });
+
+      $(".defend").click(function() {
+        defendButtonAction();
+      });
+
+      $(".special").click(function() {
+        specialButtonAction();
+      });
+  });
 });
