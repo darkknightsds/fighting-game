@@ -1,4 +1,8 @@
-//Back-end logic
+function hit()  {
+  var wack = new Audio("sounds/hit" +(Math.ceil(Math.random()*6)) + ".mp3");
+  wack.play();
+}
+
 var turnCounter=1;
 var switchTurns = function() {
   if (passivePlayer.hitPoints <= 0) {
@@ -110,6 +114,7 @@ setInitialTurnOrder();
 function attackButtonAction() {
   passivePlayer.outcome(activePlayer.attack(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
+  hit();
   if ((turnCounter %2) != 0 && (passivePlayer.hitPoints <=0)) {
     console.log(passivePlayer.hitPoints)
   move("#img1")
@@ -215,7 +220,8 @@ function specialButtonAction() {
   passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
-  if ((turnCounter %2) != 0 && (passivePlayer.hitPoints <=0)) {
+  if ((turnCounter %2) != 0
+  && (passivePlayer.hitPoints <=0)) {
   move("#img1")
     .rotate(180)
     .then()
@@ -333,6 +339,7 @@ $("#p2Choices").change(function() {
 
   $("#submitP2Selection").click(function() {
    event.preventDefault();
+   new Audio("sounds/IntroMusic.mp3").play();
    $(".characterSelector").hide();
    $(".playSpace").show();
    player2Selection = characters[$("#p2Choices").val()];
