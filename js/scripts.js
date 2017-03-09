@@ -2,7 +2,7 @@
 var turnCounter=1;
 var switchTurns = function() {
   if (passivePlayer.hitPoints <= 0) {
-    alert(passivePlayer.charName + " has died.");
+    passivePlayer.death();
   }
   placeHolder = activePlayer;
   passivePlayer.defenseModifier = 0;
@@ -54,7 +54,17 @@ Character.prototype.special = function() {
 };
 
 Character.prototype.death = function() {
-  $("#death-div").text("Foolish mortal! You are no match for me.");
+  $("#death-div").append('<p>' + passivePlayer.charName + ' has died.</p>');
+  if (activePlayer === player1Selection) {
+    $("#death-div").append('<p>Player 1, you are victorious!</p>');
+    $("#death-div").append('<p>Click the button to receive the next challenger.</p>');
+    $("#playerControls2").hide();
+  } else {
+    $("#death-div").append('<p>Player 2, you are victorious!</p>');
+    $("#death-div").append('<p>Click the button to receive the next challenger.</p>');
+    $("#playerControls1").hide();
+  }
+  $("#nextChallenger").show();
 };
 
 Character.prototype.outcome = function(c1Attack, c2Defense) {
@@ -248,6 +258,7 @@ $(document).ready(function() {
   $("#playSpace").hide();
   $("#submitP1Selection").hide();
   $("#submitP2Selection").hide();
+  $("#nextChallenger").hide();
 
 for (i = 0; i < characters.length; i++) {
     $("select#p1Choices").append('<option value="' +
