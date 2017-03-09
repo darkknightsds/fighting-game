@@ -399,6 +399,7 @@ var populatePlayerInterface = function(player1, player2) {
                                     '<button class="btn special2" type="click">Special</button>'
 
   );
+  $(".attack2, .defend2, .special2").hide();
 };
 
 
