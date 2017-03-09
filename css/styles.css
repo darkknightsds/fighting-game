@@ -1,3 +1,76 @@
-.border {
-  border: 20px;
+body {
+  background-color: #000000;
+  font-family: 'Metal Mania', cursive;
+  color: #FFFFFF;
+  background-image: url(../img/background.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: fixed;
 }
+.game-title {
+  text-align: center;
+  text-shadow: 2px 2px #ed0000;
+  margin-bottom: 5%;
+}
+.select-button {
+  width: 150px;
+  color: #000000;
+  text-shadow: 2px 2px #ffffff;
+  font-size: 24px;
+  background-color: #2bed00;
+  letter-spacing: 4px;
+}
+.preview-player {
+  font-size: 32px;
+}
+.char-name {
+  color: #ed0000;
+  text-shadow: 2px 2px #ffffff;
+  font-size: 36px;
+  font-style: italic;
+  letter-spacing: 4px;
+}
+.attack1, .attack2 {
+  width: 115px;
+  color: #ffffff;
+  text-shadow: 2px 2px #000000;
+  font-size: 24px;
+  background-color: #2bed00;
+  letter-spacing: 4px;
+}
+.defend1, .defend2 {
+  width: 115px;
+  color: #ffffff;
+  text-shadow: 2px 2px #000000;
+  font-size: 24px;
+  background-color: #ed0000;
+  letter-spacing: 4px;
+}
+.special1, .special2 {
+  width: 115px;
+  color: #000000;
+  text-shadow: 2px 2px #ffffff;
+  font-size: 24px;
+  background-color: #f9f900;
+  letter-spacing: 4px;
+}
+#main-title {
+  font-size: 120px;
+}
+#expanded-title {
+  font-size: 72px;
+}
+#p1Preview, #p2Preview {
+  font-size: 20px;
+}
+#p1Preview, #p2Preview {
+  font-size: 20px;
+}
+#p1Choices, #p2Choices {
+  color: #000000;
+  font-size: 16px;
+}
+#playerStatus1, #playerStatus2 p {
+  font-size: 24px;
+}'

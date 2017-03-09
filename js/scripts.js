@@ -181,11 +181,11 @@ function defendButtonAction() {
   }
   if ((turnCounter %2) != 0) {
     move("#img1")
-    .x(100)
+    .x(-100)
     .y(0)
     .ease('in-out')
     .then()
-    .x(-100)
+    .x(100)
     .then()
     .y(-0)
     .duration('2s')
@@ -194,11 +194,11 @@ function defendButtonAction() {
     .end();
   } else if ((turnCounter %2) === 0) {
     move("#img2")
-    .x(-100)
+    .x(100)
     .y(0)
     .ease('in-out')
     .then()
-    .x(100)
+    .x(-100)
     .then()
     .y(-0)
     .duration('2s')
@@ -271,7 +271,7 @@ for (i = 0; i < characters.length; i++) {
 
 $("#p1Choices").change(function() {
   index = $("#p1Choices").val();
-  $("#p1Preview").html('<p>' + characters[index].charName + '</p>' +
+  $("#p1Preview").html('<p class="char-name">' + characters[index].charName + '</p>' +
                         '<img src="' + characters[index].charImgUrl + '" alt="' + characters[index].charName + '">' +
                         '<p> Strength: ' + characters[index].strength + '</p>' +
                         '<p> Vitality: ' + characters[index].vitality + '</p>' +
@@ -287,7 +287,7 @@ $("#p1Choices").change(function() {
 
 $("#p2Choices").change(function() {
   index = $("#p2Choices").val();
-  $("#p2Preview").html('<p>' + characters[index].charName + '</p>' +
+  $("#p2Preview").html('<p class="char-name">' + characters[index].charName + '</p>' +
                         '<img src="' + characters[index].charImgUrl + '" alt="' + characters[index].charName + '">' +
                         '<p> Strength: ' + characters[index].strength + '</p>' +
                         '<p> Vitality: ' + characters[index].vitality + '</p>' +
@@ -347,7 +347,7 @@ var populatePlayerInterface = function(player1, player2) {
 
                                     );
   $("#playerStatus1").append(
-                                        '<h2>' +
+                                        '<h2 class="char-name">' +
                                         player1.charName +
                                         '</h2>' +
                                         '<p>Hit points: ' +
@@ -367,7 +367,7 @@ var populatePlayerInterface = function(player1, player2) {
   );
 
   $("#playerStatus2").append(
-                                        '<h2>' +
+                                        '<h2 class="char-name">' +
                                         player2.charName +
                                         '</h2>' +
                                         '<p>Hit points: ' +

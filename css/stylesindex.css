@@ -1,20 +1,26 @@
-body{
-  background-image: url(../img/gametime.png);
-  background-size: 100% 100%;
+body {
+  background-color: #000000;
+  font-family: 'Metal Mania', cursive;
+  color: #FFFFFF;
+  background-image: url(../img/background.jpeg);
+  background-size: cover;
   background-position: center;
-  background-attachment:fixed;
   background-repeat: no-repeat;
+  background-position: fixed;
 }
-
-.btn{
-  border: solid 5px black;
-  margin-top:5%;
-  margin-left:5%;
-  padding: 20px 40px;
-  background-color: black;
-  color: #00ff00;
-  border-radius: 10px;
+#start-title {
+  margin-top: 25%;
+  font-size: 180px;
+  text-align: center;
+  text-shadow: 2px 2px #ed0000;
 }
-.btn:hover{
-  color:red;
+#start-button {
+  width: 115px;
+  color: #ffffff;
+  text-shadow: 2px 2px #000000;
+  font-size: 24px;
+  background-color: #ed0000;
+  letter-spacing: 4px;
+  display: block;
+  margin: auto;
 }
