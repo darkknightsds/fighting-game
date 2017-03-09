@@ -76,7 +76,7 @@ var newCharacter = new Character("Semi-Gloss", "sg", "img/semi-gloss.jpg", 3, 7,
 characters.push(newCharacter);
 var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg", 3, 3, 3, 7);
 characters.push(newCharacter);
-var newCharacter = new Character("Shadow Dick", "sd", "img/shadow-dick.jpg", 4, 4, 4, 4);
+var newCharacter = new Character("Pula Umbra", "pu", "img/pula-umbra.jpg", 4, 4, 4, 4);
 characters.push(newCharacter);
 var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infecter.jpg", 5, 5, 3, 3);
 characters.push(newCharacter);
@@ -242,16 +242,12 @@ else if ((turnCounter %2) === 0){
 };
 
 
-console.log(turnCounter);
-
-
 //Front-end logic
 $(document).ready(function() {
   $("#player2form").hide();
   $("#playSpace").hide();
   $("#submitP1Selection").hide();
   $("#submitP2Selection").hide();
-
 
 for (i = 0; i < characters.length; i++) {
     $("select#p1Choices").append('<option value="' +
@@ -296,7 +292,6 @@ $("#p2Choices").change(function() {
 
 
   $("#submitP1Selection").click(function() {
-    // debugger;
     event.preventDefault();
     $("#player1form").hide();
     $("#player2form").show();
@@ -312,6 +307,13 @@ $("#p2Choices").change(function() {
       }
     }
   });
+
+  $("#submitP2Selection").click(function() {
+   event.preventDefault();
+   $(".characterSelector").hide();
+   $(".playSpace").show();
+   player2Selection = characters[$("#p2Choices").val()];
+   setInitialTurnOrder(player1Selection, player2Selection);
 
 var populatePlayerInterface = function(player1, player2) {
   $("div#img1").append(
@@ -388,6 +390,7 @@ var populatePlayerInterface = function(player1, player2) {
   );
 };
 
+
 populatePlayerInterface(activePlayer, passivePlayer);
 
   $(".attack1").click(function() {
@@ -401,8 +404,10 @@ populatePlayerInterface(activePlayer, passivePlayer);
   $(".special1").click(function() {
     specialButtonAction();
   });
+
   $(".attack2").click(function() {
     attackButtonAction();
+  });
 
   $(".defend2").click(function() {
     defendButtonAction();
@@ -411,16 +416,5 @@ populatePlayerInterface(activePlayer, passivePlayer);
   $(".special2").click(function() {
     specialButtonAction();
   });
-      $(".attack").click(function() {
-        attackButtonAction();
-      });
-
-      $(".defend").click(function() {
-        defendButtonAction();
-      });
-
-      $(".special").click(function() {
-        specialButtonAction();
-      });
   });
 });
