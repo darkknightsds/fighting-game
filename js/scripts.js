@@ -221,28 +221,35 @@ function specialButtonAction() {
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
   if ((turnCounter %2) != 0
-  && (passivePlayer.hitPoints <=0))
-
-  {
+  && (passivePlayer.hitPoints <=0)) {
   move("#img1")
-  .rotate(360)
-  .end();
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
+    .end();
   $("#img2").addClass('animated hinge');
 } else if ((turnCounter %2) != 0){
   move("#img1")
-  .rotate(360)
-  .end();
-} else if ((turnCounter %2) === 0
-&& (passivePlayer.hitPoints <=0))
-
- {
-    move("#img2")
-    .rotate(360)
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
+    .end();
+} else if ((turnCounter %2) === 0 && (passivePlayer.hitPoints <=0)) {
+  move("#img2")
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
     .end();
     $("#img1").addClass('animated hinge');
   } else if ((turnCounter %2) === 0) {
-    move("#img2")
-    .rotate(360)
+  move("#img2")
+    .rotate(180)
+    .then()
+    .rotate(180)
+    .pop()
     .end();
   }
   else {
