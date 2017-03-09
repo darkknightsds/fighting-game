@@ -3,6 +3,10 @@ function hit()  {
   wack.play();
 }
 
+function kO() {
+ko = new Audio("sounds/ko1.mp3").play();
+}
+
 var turnCounter=1;
 var switchTurns = function() {
   if (passivePlayer.hitPoints <= 0) {
@@ -60,13 +64,19 @@ Character.prototype.special = function() {
 Character.prototype.death = function() {
   $("#death-div").append('<p>' + passivePlayer.charName + ' has <span class="dead">died.</span></p>');
   if (activePlayer === player1Selection) {
+    new Audio("sounds/Player1win.mp3").play();
+    kO();
     $("#death-div").append('<p>Player 1, you are victorious!</p>');
     $("#death-div").append('<p>Click the button to receive the next challenger.</p>');
     $("#playerControls2").hide();
+
   } else {
+    new Audio("sounds/player2win.mp3").play();
+    kO();
     $("#death-div").append('<p>Player 2, you are victorious!</p>');
     $("#death-div").append('<p>Click the button to receive the next challenger.</p>');
     $("#playerControls1").hide();
+
   }
   $("#nextChallenger").show();
 };
@@ -130,6 +140,7 @@ function attackButtonAction() {
     .pop()
     .end();
   $("#img2").addClass('animated hinge');
+  kO();
 } else if ((turnCounter %2) != 0) {
   move("#img1")
     .x(400)
@@ -157,6 +168,7 @@ function attackButtonAction() {
     .pop()
     .end();
     $("#img1").addClass('animated hinge');
+    kO();
   } else if ((turnCounter %2) === 0) {
     move("#img2")
       .x(-400)
@@ -228,6 +240,7 @@ function specialButtonAction() {
   .rotate(360)
   .end();
   $("#img2").addClass('animated hinge');
+
 } else if ((turnCounter %2) != 0){
   move("#img1")
   .rotate(360)
