@@ -78,7 +78,7 @@ var newCharacter = new Character("Thunder ghost", "tg", "img/thunder-ghost.jpg",
 characters.push(newCharacter);
 var newCharacter = new Character("Shadow Dick", "sd", "img/shadow-dick.jpg", 4, 4, 4, 4);
 characters.push(newCharacter);
-var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infector.jpg", 5, 5, 3, 3);
+var newCharacter = new Character("Samurai Brain Infecter", "sbi", "img/samurai-brain-infecter.jpg", 5, 5, 3, 3);
 characters.push(newCharacter);
 var newCharacter = new Character("The Cat & The Gat", "tcatg", "img/the-cat-and-the-gat.jpg", 3, 5, 5, 3);
 characters.push(newCharacter);
@@ -249,6 +249,8 @@ console.log(turnCounter);
 $(document).ready(function() {
   $("#player2form").hide();
   $("#playSpace").hide();
+  $("#submitP1Selection").hide();
+  $("#submitP2Selection").hide();
 
 
 for (i = 0; i < characters.length; i++) {
@@ -260,30 +262,56 @@ for (i = 0; i < characters.length; i++) {
                                   );
 }
 
-$("#submitP1Selection").click(function() {
-  event.preventDefault();
-  $("#player1form").hide();
-  $("#player2form").show();
-  player1Selection = characters[$("#p1Choices").val()];
-  for (i = 0; i < characters.length; i++) {
-    if (characters[i].hitPoints > 0) {
-      $("select#p2Choices").append('<option value="' +
-                                      i +
-                                      '">' +
-                                      characters[i].charName +
-                                      '</option>'
-                                    );
-    }
-  }
+$("#p1Choices").change(function() {
+  index = $("#p1Choices").val();
+  $("#p1Preview").html('<p>' + characters[index].charName + '</p>' +
+                        '<img src="' + characters[index].charImgUrl + '" alt="' + characters[index].charName + '">' +
+                        '<p> Strength: ' + characters[index].strength + '</p>' +
+                        '<p> Vitality: ' + characters[index].vitality + '</p>' +
+                        '<p> Agility: ' + characters[index].agility + '</p>' +
+                        '<p> Luck: ' + characters[index].luck + '</p>' +
+                        '<p> Hit Points: ' + characters[index].hitPoints + '</p>' +
+                        '<p> Base Attack: ' + characters[index].attackStat + '</p>' +
+                        '<p> Base Attack: ' + characters[index].defenseStat + '</p>' +
+                        '<p> Special Attack Points: ' + characters[index].specialPoints + '</p>'
+  );
+  $("#submitP1Selection").show();
+});
+
+$("#p2Choices").change(function() {
+  index = $("#p2Choices").val();
+  $("#p2Preview").html('<p>' + characters[index].charName + '</p>' +
+                        '<img src="' + characters[index].charImgUrl + '" alt="' + characters[index].charName + '">' +
+                        '<p> Strength: ' + characters[index].strength + '</p>' +
+                        '<p> Vitality: ' + characters[index].vitality + '</p>' +
+                        '<p> Agility: ' + characters[index].agility + '</p>' +
+                        '<p> Luck: ' + characters[index].luck + '</p>' +
+                        '<p> Hit Points: ' + characters[index].hitPoints + '</p>' +
+                        '<p> Base Attack: ' + characters[index].attackStat + '</p>' +
+                        '<p> Base Attack: ' + characters[index].defenseStat + '</p>' +
+                        '<p> Special Attack Points: ' + characters[index].specialPoints + '</p>'
+  );
+  $("#submitP2Selection").show();
 });
 
 
-$("#submitP2Selection").click(function() {
-  event.preventDefault();
-  $(".characterSelector").hide();
-  $(".playSpace").show();
-  player2Selection = characters[$("#p2Choices").val()];
-  setInitialTurnOrder(player1Selection, player2Selection);
+  $("#submitP1Selection").click(function() {
+    // debugger;
+    event.preventDefault();
+    $("#player1form").hide();
+    $("#player2form").show();
+    player1Selection = characters[$("#p1Choices").val()];
+    for (i = 0; i < characters.length; i++) {
+      if (characters[i].hitPoints > 0 && characters[i] != player1Selection) {
+        $("select#p2Choices").append('<option value="' +
+                                        i +
+                                        '">' +
+                                        characters[i].charName +
+                                        '</option>'
+                                      );
+      }
+    }
+  });
 
 var populatePlayerInterface = function(player1, player2) {
   $("div#img1").append(
@@ -375,7 +403,6 @@ populatePlayerInterface(activePlayer, passivePlayer);
   });
   $(".attack2").click(function() {
     attackButtonAction();
-  });
 
   $(".defend2").click(function() {
     defendButtonAction();
@@ -384,7 +411,6 @@ populatePlayerInterface(activePlayer, passivePlayer);
   $(".special2").click(function() {
     specialButtonAction();
   });
-
       $(".attack").click(function() {
         attackButtonAction();
       });
