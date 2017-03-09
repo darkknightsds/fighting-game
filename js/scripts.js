@@ -140,7 +140,6 @@ function attackButtonAction() {
     .pop()
     .end();
   $("#img2").addClass('animated hinge');
-  kO();
 } else if ((turnCounter %2) != 0) {
   move("#img1")
     .x(400)
@@ -168,7 +167,6 @@ function attackButtonAction() {
     .pop()
     .end();
     $("#img1").addClass('animated hinge');
-    kO();
   } else if ((turnCounter %2) === 0) {
     move("#img2")
       .x(-400)
@@ -189,6 +187,7 @@ function attackButtonAction() {
 };
 
 function defendButtonAction() {
+  new Audio("sounds/defense.mp3").play();
   activePlayer.defenseModifier = Math.floor((activePlayer.defenseStat)/3);
   if (activePlayer.specialPoints < 3) {
     activePlayer.specialPoints++;
@@ -229,6 +228,7 @@ function defendButtonAction() {
 }
 
 function specialButtonAction() {
+  new Audio("sounds/special.mp3").play();
   passivePlayer.outcome(activePlayer.special(), passivePlayer.defense());
   $("#" + passivePlayer.charID + "hitPoints").text(passivePlayer.hitPoints);
   $("#" + activePlayer.charID + "specialPoints").text(activePlayer.specialPoints);
