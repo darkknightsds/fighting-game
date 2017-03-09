@@ -21,6 +21,16 @@ body {
   background-color: #2bed00;
   letter-spacing: 4px;
 }
+.continue-button {
+  width: 150px;
+  color: #000000;
+  text-shadow: 2px 2px #ffffff;
+  font-size: 24px;
+  background-color: #2bed00;
+  letter-spacing: 4px;
+  display: block;
+  margin: auto;
+}
 .preview-player {
   font-size: 32px;
 }
@@ -55,6 +65,9 @@ body {
   background-color: #f9f900;
   letter-spacing: 4px;
 }
+.dead {
+  color: #ed0000;
+}
 #main-title {
   font-size: 120px;
 }
@@ -73,4 +86,11 @@ body {
 }
 #playerStatus1, #playerStatus2 p {
   font-size: 24px;
-}'
+}
+#death-div {
+  margin-top: 5%;
+  text-align: center;
+}
+#death-div p {
+  font-size: 22px;
+}

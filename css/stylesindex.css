@@ -8,6 +8,15 @@ body {
   background-repeat: no-repeat;
   background-position: fixed;
 }
+a {
+    color: #ffffff;
+}
+a:visited {
+  color: #ffffff;
+}
+a:hover {
+  color: #000000;
+}
 #start-title {
   margin-top: 25%;
   font-size: 180px;
