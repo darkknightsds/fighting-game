@@ -30,12 +30,9 @@ _A team effort in using HTML, CSS, Javascript, & jQuery. Combat Management Syste
 * _When one character is defeated, or whenever you like, reload the page  and choose new characters._
 * _Experiment and have fun!_
 
-## Known Bugs
-
-## Support and contact details
-
 ## Technologies used
 _HTML, CSS, Javascript, jQuery_
+
 <!-- ### License -->
 
-Copyright (c) 2016 **_Liam Stabeno, Nathaniel Meyer, Shane Stafford, & Evan Bishop_**
+MIT License. Copyright (c) 2016 **_Liam Stabeno, Nathaniel Meyer, Shane Stafford, & Evan Bishop_**
