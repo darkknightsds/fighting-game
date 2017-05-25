@@ -33,6 +33,6 @@ _A team effort in using HTML, CSS, Javascript, & jQuery. Combat Management Syste
 ## Technologies used
 _HTML, CSS, Javascript, jQuery_
 
-<!-- ### License -->
+### License
 
 MIT License. Copyright (c) 2016 **_Liam Stabeno, Nathaniel Meyer, Shane Stafford, & Evan Bishop_**
